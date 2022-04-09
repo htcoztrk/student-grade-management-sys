@@ -1,6 +1,7 @@
 package com.example.school.service.business;
 
 import java.util.List;
+import java.util.function.Predicate;
 
 import javax.transaction.Transactional;
 
@@ -8,7 +9,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
-import com.example.school.dto.request.GradesRequest;
+import com.example.school.dto.request.AllStudentsGradesRequest;
 import com.example.school.dto.request.StudentCourseRequest;
 import com.example.school.dto.request.StudentGradesRequest;
 import com.example.school.dto.response.StudentCourseResponse;
@@ -17,7 +18,6 @@ import com.example.school.entity.StudentCourse;
 import com.example.school.exception.RestExceptionBase;
 import com.example.school.repository.StudentCourseRepository;
 import com.example.school.service.StudentCourseService;
-import java.util.function.Predicate;
 
 @Service
 public class StudentCourseServiceImpl implements StudentCourseService {
@@ -34,6 +34,8 @@ public class StudentCourseServiceImpl implements StudentCourseService {
 	@Transactional
 	public StudentCourseResponse add(StudentCourseRequest request) {
 		var studentCourse = modelMapper.map(request, StudentCourse.class);
+		studentCourse.setAverage(findAverage(studentCourse.getExam1(),studentCourse.getExam2()));
+		studentCourse.setPassed(checkIfPassed(studentCourse.getAverage()));
 		var addedStudentCourse = studentCourseRepository.save(studentCourse);
 		return modelMapper.map(addedStudentCourse, StudentCourseResponse.class);
 	}
@@ -44,6 +46,8 @@ public class StudentCourseServiceImpl implements StudentCourseService {
 		var studentCourse = studentCourseRepository.findById(identity)
 				.orElseThrow(() -> new RestExceptionBase("There is no such id", "unknown.studentcourse", "1"));
 		modelMapper.map(request, studentCourse);
+		studentCourse.setAverage(findAverage(studentCourse.getExam1(),studentCourse.getExam2()));
+		studentCourse.setPassed(checkIfPassed(studentCourse.getAverage()));
 		return modelMapper.map(studentCourseRepository.saveAndFlush(studentCourse), StudentCourseResponse.class);
 
 	}
@@ -78,13 +82,13 @@ public class StudentCourseServiceImpl implements StudentCourseService {
 				.stream()
 				.filter(isStudentPredicate.and(isCoursePredicate).and(isYearPredicate))
 				.map(studentCourse -> modelMapper.map(studentCourse, StudentGradesResponse.class))
-				.findAny();
-        result.get().setAverageGrade((result.get().getExam1()+result.get().getExam2())/2);
+				.findFirst();
+       // result.get().setAverageGrade((result.get().getExam1()+result.get().getExam2())/2);
 		return result.get();
 	}
 
 	@Override
-	public List<StudentGradesResponse> getAllGradesofAllStudent(GradesRequest request) {
+	public List<StudentGradesResponse> getAllGradesofAllStudent(AllStudentsGradesRequest request) {
 		Predicate<StudentCourse> isCoursePredicate = i -> i.getCourse().getCode().equals(request.getCourseCode());
 		Predicate<StudentCourse> isYearPredicate = i -> i.getCourseYear().equals(request.getCourseYear());
 		var result=studentCourseRepository.findAll()
@@ -93,8 +97,18 @@ public class StudentCourseServiceImpl implements StudentCourseService {
 				.map(studentCourse->modelMapper.map(studentCourse, StudentGradesResponse.class))
 				.toList();
 		
-		result.forEach(s->s.setAverageGrade((s.getExam1()+s.getExam2())/2));
+		//result.forEach(s->s.setAverageGrade((s.getExam1()+s.getExam2())/2));
 		return result;
 	}
 
+	//if average of grades is bigger or equal to 50 then student will be passed from the course.
+	public boolean checkIfPassed(double average) {
+		
+		return average>=50?true:false;
+	}
+	//The effect of the visa grade on the average is 40 percent. The effect of the final grade is 60 percent.
+	public double findAverage(int grade1, int grade2) {
+		double average=((grade1*40)/100)+((grade2*60)/100);
+		return average;
+	}
 }

@@ -19,6 +19,7 @@ public class ModelMapperConfig {
 		response.setStudentId(source.getStudent().getIdentity());
 		response.setExam1(source.getExam1());
 		response.setExam2(source.getExam2());
+		response.setAverageGrade(source.getAverage());
 		return response;
 	};
 	

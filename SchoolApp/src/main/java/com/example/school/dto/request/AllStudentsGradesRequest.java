@@ -2,10 +2,10 @@ package com.example.school.dto.request;
 
 import com.example.school.entity.CourseYear;
 
-public class GradesRequest {
+public class AllStudentsGradesRequest {
 	private CourseYear courseYear;
 	private String courseCode;
-	public GradesRequest() {
+	public AllStudentsGradesRequest() {
 		
 	}
 	public CourseYear getCourseYear() {

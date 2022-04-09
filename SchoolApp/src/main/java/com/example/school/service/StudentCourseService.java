@@ -2,7 +2,7 @@ package com.example.school.service;
 
 import java.util.List;
 
-import com.example.school.dto.request.GradesRequest;
+import com.example.school.dto.request.AllStudentsGradesRequest;
 import com.example.school.dto.request.StudentCourseRequest;
 import com.example.school.dto.request.StudentGradesRequest;
 import com.example.school.dto.response.StudentCourseResponse;
@@ -16,5 +16,5 @@ public interface StudentCourseService {
 	StudentCourseResponse getById(Long identity);
 	List<StudentCourseResponse> getAll(int pageNo,int pageSize);
 	StudentGradesResponse getGradesOfStudent(StudentGradesRequest request);
-	List<StudentGradesResponse> getAllGradesofAllStudent(GradesRequest request);
+	List<StudentGradesResponse> getAllGradesofAllStudent(AllStudentsGradesRequest request);
 }

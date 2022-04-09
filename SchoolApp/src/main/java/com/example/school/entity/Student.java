@@ -5,6 +5,7 @@ import java.util.Objects;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -13,6 +14,7 @@ import javax.persistence.Table;
 
 import com.example.school.validation.Email;
 import com.example.school.validation.StrongPassword;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name = "students")
@@ -35,8 +37,8 @@ public class Student {
 	private String email;
 	@Column(name = "phone")
 	private String phone;
-	//@JsonIgnore
-	@OneToMany(mappedBy = "student")
+	@JsonIgnore
+	@OneToMany(mappedBy = "student",fetch=FetchType.LAZY)
 	List<StudentCourse> studentCourses;
 
 	public Student() {

@@ -10,18 +10,23 @@ public class StudentCourseResponse {
 	private Long identity;
 	private int exam1;
 	private int exam2;
+	private double average;
+	private boolean isPassed;
 	private CourseYear courseYear;
 	private Course course;
 	private Student student;
 	public StudentCourseResponse() {
 		
 	}
-	
-	public StudentCourseResponse(Long identity, int exam1, int exam2, CourseYear courseYear, Course course,
-			Student student) {
+
+	public StudentCourseResponse(Long identity, int exam1, int exam2, double average, boolean isPassed,
+			CourseYear courseYear, Course course, Student student) {
+
 		this.identity = identity;
 		this.exam1 = exam1;
 		this.exam2 = exam2;
+		this.average = average;
+		this.isPassed = isPassed;
 		this.courseYear = courseYear;
 		this.course = course;
 		this.student = student;
@@ -64,6 +69,22 @@ public class StudentCourseResponse {
 	public void setStudent(Student student) {
 		this.student = student;
 	}
+	public double getAverage() {
+		return average;
+	}
+
+	public void setAverage(double average) {
+		this.average = average;
+	}
+
+	public boolean isPassed() {
+		return isPassed;
+	}
+
+	public void setPassed(boolean isPassed) {
+		this.isPassed = isPassed;
+	}
+
 	@Override
 	public int hashCode() {
 		return Objects.hash(identity);

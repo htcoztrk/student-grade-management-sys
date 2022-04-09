@@ -1,4 +1,4 @@
-package com.example.school;
+package com.example.school.controller;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;

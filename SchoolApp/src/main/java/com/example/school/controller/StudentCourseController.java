@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.context.annotation.RequestScope;
 
-import com.example.school.dto.request.GradesRequest;
+import com.example.school.dto.request.AllStudentsGradesRequest;
 import com.example.school.dto.request.StudentCourseRequest;
 import com.example.school.dto.request.StudentGradesRequest;
 import com.example.school.dto.response.StudentCourseResponse;
@@ -71,7 +71,7 @@ public class StudentCourseController {
 		
 	}
 	@PostMapping("/getGradesOfAllStudent")
-	public List<StudentGradesResponse> getGradesOfAllStudent(@RequestBody GradesRequest request) {
+	public List<StudentGradesResponse> getGradesOfAllStudent(@RequestBody AllStudentsGradesRequest request) {
 		return studentCourseService.getAllGradesofAllStudent(request);
 		
 	}

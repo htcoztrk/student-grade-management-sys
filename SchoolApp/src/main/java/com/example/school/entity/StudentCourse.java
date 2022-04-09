@@ -23,8 +23,12 @@ public class StudentCourse {
 	private int exam1;
 	@Column(name="exam2")
 	private int exam2;
+	@Column(name="average")
+	private double average;
+	@Column(name="is_passed")
+	private boolean isPassed;
 	private CourseYear courseYear;
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name="course_id")
 	private Course course;
 	@ManyToOne(fetch = FetchType.EAGER)
@@ -33,14 +37,20 @@ public class StudentCourse {
 	public StudentCourse() {
 
 	}
-	public StudentCourse(Long identity, int exam1, int exam2, CourseYear courseYear, Course course, Student student) {
+	
+	public StudentCourse(Long identity, int exam1, int exam2, double average, boolean isPassed, CourseYear courseYear,
+			Course course, Student student) {
+		super();
 		this.identity = identity;
 		this.exam1 = exam1;
 		this.exam2 = exam2;
+		this.average = average;
+		this.isPassed = isPassed;
 		this.courseYear = courseYear;
 		this.course = course;
 		this.student = student;
 	}
+
 	public Long getIdentity() {
 		return identity;
 	}
@@ -76,6 +86,18 @@ public class StudentCourse {
 	}
 	public void setStudent(Student student) {
 		this.student = student;
+	}
+	public double getAverage() {
+		return average;
+	}
+	public void setAverage(double average) {
+		this.average = average;
+	}
+	public boolean isPassed() {
+		return isPassed;
+	}
+	public void setPassed(boolean isPassed) {
+		this.isPassed = isPassed;
 	}
 	@Override
 	public int hashCode() {

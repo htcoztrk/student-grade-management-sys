@@ -6,9 +6,12 @@ import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name = "courses")
@@ -24,20 +27,16 @@ public class Course {
 	@Id
 	@Column(name = "code")
 	private String code;
+
 	@Column(name = "course_type")
 	@Enumerated
 	private CourseType courseType;
-	// @JsonIgnore
-	@OneToMany(mappedBy = "course")
+	
+	@JsonIgnore
+	@OneToMany(mappedBy = "course",fetch=FetchType.LAZY)
 	List<StudentCourse> studentCourses;
 
 	public Course() {
-	}
-
-	public Course(String code, CourseType courseType, List<StudentCourse> studentCourses) {
-		this.code = code;
-		this.courseType = courseType;
-		this.studentCourses = studentCourses;
 	}
 
 	public String getCode() {
@@ -56,6 +55,14 @@ public class Course {
 		this.courseType = courseType;
 	}
 
+
+	public List<StudentCourse> getStudentCourses() {
+		return studentCourses;
+	}
+
+	public void setStudentCourses(List<StudentCourse> studentCourses) {
+		this.studentCourses = studentCourses;
+	}
 	@Override
 	public int hashCode() {
 		return Objects.hash(code);

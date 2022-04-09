@@ -1,4 +1,4 @@
-package com.example.school;
+package com.example.school.service;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -73,7 +73,7 @@ public class StudentServiceTest {
 	}
 
 	@Test
-	void getStudentByIdShouldReturnOk() {
+	void getStudentByExistIdShouldReturnOk() {
 		var student = new Student();
 		student.setIdentity(1L);
 		student.setEmail("someone@gmail.com");
@@ -96,9 +96,9 @@ public class StudentServiceTest {
 	}
 
 	@Test
-	void getStudentByIdShouldReturnNotFound() {
+	void getStudentByNotExistIdShouldReturnNotFound() {
 		Mockito.when(studentRepository.findById(1L)).thenThrow(RestExceptionBase.class);
-		// var student=studentService.getById(1L);
+		
 		assertThrows(RestExceptionBase.class, () -> studentService.getById(1L));
 	}
 
