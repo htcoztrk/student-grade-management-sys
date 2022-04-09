@@ -12,7 +12,8 @@ public interface StudentService {
 	StudentResponse updateStudent(Long identity,StudentRequest request);
 	StudentResponse deleteStudent(Long identity);
 	StudentResponse getById(Long id);
-	List<StudentResponse> getAll(int pageNo,int pageSize);
+	List<StudentResponse> getAllByPage(int pageNo,int pageSize);
+	List<StudentResponse> getAll();
 	List<StudentResponse> getByName(String name);
 	StudentResponse patchStudent(Long id,Map<String, Object> request);
 }

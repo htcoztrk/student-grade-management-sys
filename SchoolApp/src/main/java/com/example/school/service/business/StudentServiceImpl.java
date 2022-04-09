@@ -61,7 +61,7 @@ public class StudentServiceImpl implements StudentService{
 	}
 
 	@Override
-	public List<StudentResponse> getAll(int pageNo,int pageSize) {
+	public List<StudentResponse> getAllByPage(int pageNo,int pageSize) {
 		return studentRepository.findAll(PageRequest.of(pageNo, pageSize))
 				.stream()
 				.map(student->modelMapper.map(student, StudentResponse.class))
@@ -97,6 +97,15 @@ public class StudentServiceImpl implements StudentService{
 		return modelMapper.map(
 				studentRepository.save(student), 
 				StudentResponse.class);
+	}
+
+	@Override
+	public List<StudentResponse> getAll() {
+		return studentRepository.findAll()
+				.stream()
+				.map(student->modelMapper.map(student, StudentResponse.class))
+				.sorted(Comparator.comparing(StudentResponse::getName))
+				.toList();
 	}
 
 }

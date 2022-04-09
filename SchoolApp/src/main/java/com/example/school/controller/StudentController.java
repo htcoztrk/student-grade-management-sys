@@ -36,7 +36,7 @@ public class StudentController {
 		this.studentService = studentService;
 	}
 
-	@GetMapping("/getall")
+	@GetMapping("/getallByPage")
 	public List<StudentResponse> getAllByPage(
 			@RequestParam(required = false, defaultValue = "0") 
 			@Min(0) 
@@ -44,7 +44,7 @@ public class StudentController {
 			@RequestParam(required = false, defaultValue = "20") 
 			@Max(50) 
 			int pageSize) {
-		return studentService.getAll(pageNo, pageSize);
+		return studentService.getAllByPage(pageNo, pageSize);
 	}
 	@GetMapping("/getbyid/{identity}")
 	public StudentResponse getById(@PathVariable Long identity) {
@@ -69,6 +69,11 @@ public class StudentController {
 	@DeleteMapping("/{identity}")
 	public StudentResponse deleteStudent(@PathVariable Long identity) {
 		return studentService.deleteStudent(identity);
+	}
+	@GetMapping("/getall")
+	public List<StudentResponse> getAll(
+			) {
+		return studentService.getAll();
 	}
 }
 
