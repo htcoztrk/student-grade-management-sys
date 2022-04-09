@@ -43,7 +43,7 @@ public class CourseController {
 			int pageSize) {
 		return courseService.getAll(pageNo, pageSize);
 	}
-	@GetMapping("/getbyid/{code}")
+	@GetMapping("/getbycode/{code}")
 	public CourseResponse getByCode(@PathVariable String code) {
 		return courseService.getByCode(code);
 	}
