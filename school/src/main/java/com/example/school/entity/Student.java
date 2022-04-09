@@ -13,7 +13,6 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import com.example.school.validation.Email;
-import com.example.school.validation.StrongPassword;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity

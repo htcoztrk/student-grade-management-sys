@@ -18,7 +18,6 @@ import com.example.school.dto.response.StudentResponse;
 import com.example.school.entity.Student;
 import com.example.school.exception.RestExceptionBase;
 import com.example.school.repository.StudentRepository;
-import com.example.school.service.StudentService;
 import com.example.school.service.business.StudentServiceImpl;
 import com.fasterxml.jackson.core.JsonProcessingException;
 
