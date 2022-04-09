@@ -8,7 +8,7 @@ Avarage grade, calculated according to 2 exams in a year. Avarage grade should b
 There are two school years, one active (2020-2021 school year) and one passive (2019-2020 school year).
 Students have grades and average grades for both active and passive school years.
 
-
+<!--
 #### Requirements
 
 • The API will expose an endpoint which accepts the user information (customerID,
@@ -20,7 +20,7 @@ customerID.
 • Also, if initialCredit is not 0, a transaction will be sent to the new account.
 
 • Another Endpoint will output the user information showing Name, Surname, balance, and
-transactions of the accounts.
+transactions of the accounts. -->
 ___
 The application has 3 apis
 * StudentAPI for CRUP operations
