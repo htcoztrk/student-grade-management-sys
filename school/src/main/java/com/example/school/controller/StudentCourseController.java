@@ -30,7 +30,8 @@ import com.example.school.service.StudentCourseService;
 @CrossOrigin
 @RequestScope
 public class StudentCourseController {
-
+//docker run --name school -d -p 9090:8080 school:1.0
+//docker build . -t school:1.0	
 	private final StudentCourseService studentCourseService;
 
 	public StudentCourseController(StudentCourseService studentCourseService) {
@@ -70,7 +71,7 @@ public class StudentCourseController {
 		return studentCourseService.getGradesOfStudent(request);
 		
 	}
-	@PostMapping("/getGradesOfAllStudent")
+	@PostMapping("/getGradesOfAllStudents")
 	public List<StudentGradesResponse> getGradesOfAllStudent(@RequestBody AllStudentsGradesRequest request) {
 		return studentCourseService.getAllGradesofAllStudent(request);
 		

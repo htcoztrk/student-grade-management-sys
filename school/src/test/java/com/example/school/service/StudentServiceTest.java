@@ -48,6 +48,7 @@ public class StudentServiceTest {
 		request.setPassword("dcds");
 		request.setUsername("fffvf");
 		
+		
 		Student student = new Student();
 		student.setIdentity(1L);
 		student.setEmail("hatice@gmail.com");
