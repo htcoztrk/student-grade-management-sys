@@ -34,7 +34,7 @@ public class StudentCourseServiceImpl implements StudentCourseService {
 	@Transactional
 	public StudentCourseResponse add(StudentCourseRequest request) {
 		var studentCourse = modelMapper.map(request, StudentCourse.class);
-		studentCourse.setAverage(findAverage(studentCourse.getExam1(),studentCourse.getExam2()));
+		studentCourse.setAverage(findAverage(studentCourse.getExam1(), studentCourse.getExam2()));
 		studentCourse.setPassed(checkIfPassed(studentCourse.getAverage()));
 		var addedStudentCourse = studentCourseRepository.save(studentCourse);
 		return modelMapper.map(addedStudentCourse, StudentCourseResponse.class);
@@ -46,7 +46,7 @@ public class StudentCourseServiceImpl implements StudentCourseService {
 		var studentCourse = studentCourseRepository.findById(identity)
 				.orElseThrow(() -> new RestExceptionBase("There is no such id", "unknown.studentcourse", "1"));
 		modelMapper.map(request, studentCourse);
-		studentCourse.setAverage(findAverage(studentCourse.getExam1(),studentCourse.getExam2()));
+		studentCourse.setAverage(findAverage(studentCourse.getExam1(), studentCourse.getExam2()));
 		studentCourse.setPassed(checkIfPassed(studentCourse.getAverage()));
 		return modelMapper.map(studentCourseRepository.saveAndFlush(studentCourse), StudentCourseResponse.class);
 
@@ -69,46 +69,56 @@ public class StudentCourseServiceImpl implements StudentCourseService {
 
 	@Override
 	public List<StudentCourseResponse> getAll(int pageNo, int pageSize) {
-		return studentCourseRepository.findAll(PageRequest.of(pageNo, pageSize)).stream()
-				.map(studentCourse -> modelMapper.map(studentCourse, StudentCourseResponse.class)).toList();
+		return studentCourseRepository.findAll(PageRequest.of(pageNo, pageSize))
+				.stream()
+				.map(studentCourse -> modelMapper.map(studentCourse, StudentCourseResponse.class))
+				.toList();
 	}
 
 	@Override
 	public StudentGradesResponse getGradesOfStudent(StudentGradesRequest request) {
-		Predicate<StudentCourse> isStudentPredicate = i -> i.getStudent().getIdentity().equals(request.getStudentId());
-		Predicate<StudentCourse> isCoursePredicate = i -> i.getCourse().getCode().equals(request.getCourseCode());
-		Predicate<StudentCourse> isYearPredicate = i -> i.getCourseYear().equals(request.getCourseYear());
-		var result = studentCourseRepository.findAll()
+		Predicate<StudentCourse> isStudentPredicate = i -> i.getStudent().getIdentity()
+				.equals(request.getStudentId());
+		Predicate<StudentCourse> isCoursePredicate = i -> i.getCourse().getCode()
+				.equals(request.getCourseCode());
+		Predicate<StudentCourse> isYearPredicate = i -> i.getCourseYear()
+				.equals(request.getCourseYear());
+
+		return studentCourseRepository.findAll()
 				.stream()
 				.filter(isStudentPredicate.and(isCoursePredicate).and(isYearPredicate))
 				.map(studentCourse -> modelMapper.map(studentCourse, StudentGradesResponse.class))
-				.findFirst();
-       // result.get().setAverageGrade((result.get().getExam1()+result.get().getExam2())/2);
-		return result.get();
+				.findFirst()
+				.get();
+
 	}
 
 	@Override
 	public List<StudentGradesResponse> getAllGradesofAllStudent(AllStudentsGradesRequest request) {
-		Predicate<StudentCourse> isCoursePredicate = i -> i.getCourse().getCode().equals(request.getCourseCode());
-		Predicate<StudentCourse> isYearPredicate = i -> i.getCourseYear().equals(request.getCourseYear());
-		var result=studentCourseRepository.findAll()
+		Predicate<StudentCourse> isCoursePredicate = i -> i.getCourse().getCode()
+				.equals(request.getCourseCode());
+		Predicate<StudentCourse> isYearPredicate = i -> i.getCourseYear()
+				.equals(request.getCourseYear());
+
+		return studentCourseRepository.findAll()
 				.stream()
 				.filter(isYearPredicate.and(isCoursePredicate))
-				.map(studentCourse->modelMapper.map(studentCourse, StudentGradesResponse.class))
+				.map(studentCourse -> modelMapper.map(studentCourse, StudentGradesResponse.class))
 				.toList();
-		
-		//result.forEach(s->s.setAverageGrade((s.getExam1()+s.getExam2())/2));
-		return result;
+
 	}
 
-	//if average of grades is bigger or equal to 50 then student will be passed from the course.
+	// if average of grades is bigger or equal to 50 then student will be passed
+	// from the course.
 	public boolean checkIfPassed(double average) {
-		
-		return average>=50?true:false;
+
+		return average >= 50 ? true : false;
 	}
-	//The effect of the visa grade on the average is 40 percent. The effect of the final grade is 60 percent.
+
+	// The effect of the visa grade on the average is 40 percent. The effect of the
+	// final grade is 60 percent.
 	public double findAverage(int grade1, int grade2) {
-		double average=((grade1*40)/100)+((grade2*60)/100);
-		return average;
+		return ((grade1 * 40) + (grade2 * 60))/100;
+		
 	}
 }
