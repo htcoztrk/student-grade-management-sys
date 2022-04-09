@@ -102,4 +102,4 @@ $ mvn spring-boot:run
 ```
 
 ### Swagger UI will be run on this url
-`http://localhost:${PORT}/swagger-ui.html`
+`http://localhost:8080/api/v1/swagger-ui.html`
