@@ -75,8 +75,9 @@ JUnit test coverage is 100% as well as unit and integration tests are available.
 ### Run & Build
 
 ---
-There are ways of run & build the application.
 <!--
+There are ways of run & build the application.
+
 #### Docker Compose
 
 For docker compose usage, docker images already push to docker.io
@@ -88,7 +89,7 @@ ___
 $ cd school
 $ docker-compose up
 ```
--->
+
 #### Maven
 
 For maven usage, you need to change `proxy` value in the `account-fe/package.json` 
@@ -100,6 +101,6 @@ $ cd school
 $ mvn clean install
 $ mvn spring-boot:run
 ```
-
+-->
 ### Swagger UI will be run on this url
 `http://localhost:8080/api/v1/swagger-ui.html`
